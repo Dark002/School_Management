@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="dashboard/layouts/header :: header"></head>
+
+<body id="page-top">
+<div id="wrapper">
+    <ul th:replace="dashboard/layouts/sidebar :: sidebar"></ul>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <nav th:replace="dashboard/layouts/navbar :: navbar"></nav>
+
+            <div class="container-fluid">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <a class="btn-sm btn-primary" th:href="${'/dashboard/manage/session/' + sessionObj.id}">Back to <span th:text="${sessionObj.startYear}"></span> session page</a>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                    </div>
+                    <div class="card-body">
+                        <form method="post" th:action="${'/dashboard/manage/session/' + sessionObj.id + '/add/classroom'}" th:object="${classroom}">
+                            <div class="form-group">
+                                <label for="session">Session</label>
+                                <input type="text" id="session" class="form-control" disabled="disabled" th:value="${sessionObj.startYear}">
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Classroom Name</label>
+                                <input type="text" id="name" class="form-control" required="required" placeholder="Classroom Name" th:field="*{name}">
+                            </div>
+                            <div class="form-group">
+                                <label for="fee">Fee</label>
+                                <input type="number" id="fee" class="form-control" required="required" placeholder="Fee" th:field="*{fee}">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="dashboard/layouts/footer :: footer"></footer>
+    </div>
+</div>
+
+<a th:replace="dashboard/layouts/scrollToTop :: scrollToTop"> </a>
+<div th:replace="dashboard/layouts/logoutModal :: logoutModal"></div>
+<script th:replace="site/layouts/toast :: toast"></script>
+</body>
+
+</html>

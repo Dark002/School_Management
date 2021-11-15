@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="dashboard/layouts/header :: header"></head>
+
+<body id="page-top">
+<div id="wrapper">
+    <ul th:replace="dashboard/layouts/sidebar :: sidebar"></ul>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <nav th:replace="dashboard/layouts/navbar :: navbar"></nav>
+
+            <div class="container-fluid">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <a class="btn-sm btn-primary" th:href="${'/dashboard/manage/session/' + student.session.id}">Back to <span th:text="${student.session.startYear}"></span> session page</a>
+                    <a th:href="${'/dashboard/manage/student/' + student.rollNo + '/delete'}" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm">Delete Student</a>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Info</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <tbody>
+                                <tr>
+                                    <td>Roll No.</td>
+                                    <td th:text="${student.rollNo}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td th:text="${student.name}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Date of Birth</td>
+                                    <td th:text="${#dates.format(student.dob, 'dd-MM-yyyy')}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td th:text="${student.email}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Father Name</td>
+                                    <td th:text="${student.fatherName}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone</td>
+                                    <td th:text="${student.phoneNo}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td th:text="${student.address}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Session</td>
+                                    <td>
+                                        <a th:href="${'/dashboard/manage/session/' + student.session.id}" th:text="${student.session.startYear}"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Stream</td>
+                                    <td th:text="${student.stream.name}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Application Form</td>
+                                    <td>
+                                        <a th:href="${'/dashboard/manage/session/' + student.session.id + '/application/' + student.applicationId}" th:text="${student.applicationId}"></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Registrations</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Classroom</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="classroomRegistration: ${classroomRegistrations}">
+                                    <td th:text="${classroomRegistration.classroom.name}"></td>
+                                    <td>
+                                        <a th:href="${'/dashboard/manage/student/' + student.rollNo + '/registration/' + classroomRegistration.id}" class="btn-sm btn-success">
+                                            <span class="text">View</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <footer th:replace="dashboard/layouts/footer :: footer"></footer>
+    </div>
+</div>
+
+<a th:replace="dashboard/layouts/scrollToTop :: scrollToTop"> </a>
+<div th:replace="dashboard/layouts/logoutModal :: logoutModal"></div>
+<script th:replace="site/layouts/toast :: toast"></script>
+</body>
+
+</html>

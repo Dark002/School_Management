@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="dashboard/layouts/header :: header"></head>
+
+<body id="page-top">
+<div id="wrapper">
+    <ul th:replace="dashboard/layouts/sidebar :: sidebar"></ul>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <nav th:replace="dashboard/layouts/navbar :: navbar"></nav>
+
+            <div class="container-fluid">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <a class="btn-sm btn-primary" href='/dashboard/'>Back to Dashboard</a>
+                    <a th:href="@{/dashboard/add/teacher}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Add Teacher</a>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">List of all teachers</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Date of birth</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="teacher: ${teachers}">
+                                    <td th:text="${teacher.name}"></td>
+                                    <td th:text="${teacher.email}"></td>
+                                    <td th:text="${teacher.phoneNo}"></td>
+                                    <td th:text="${#dates.format(teacher.dob, 'dd-MM-yyyy')}"></td>
+                                    <td>
+                                        <a th:href="${'/dashboard/manage/teacher/' + teacher.id}" class="btn-sm btn-primary">
+                                            <span class="text">Manage</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="dashboard/layouts/footer :: footer"></footer>
+    </div>
+</div>
+
+<a th:replace="dashboard/layouts/scrollToTop :: scrollToTop"> </a>
+<div th:replace="dashboard/layouts/logoutModal :: logoutModal"></div>
+<script th:replace="site/layouts/toast :: toast"></script>
+</body>
+
+</html>

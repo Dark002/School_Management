@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="dashboard/layouts/header :: header"></head>
+
+<body id="page-top">
+<div id="wrapper">
+    <ul th:replace="dashboard/layouts/sidebar :: sidebar"></ul>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <nav th:replace="dashboard/layouts/navbar :: navbar"></nav>
+
+            <div class="container-fluid">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                	<a class="btn-sm btn-primary" th:href="${'/dashboard/manage/session/' + sessionObj.id}">Back to <span th:text="${sessionObj.startYear}"></span> session page</a>
+                    <a th:href="${'/dashboard/manage/session/' + sessionObj.id + '/classroom/' + classroom.id + '/delete'}" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm">Delete Classroom</a>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Info</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <tbody>
+                                <tr>
+                                    <td>Classroom</td>
+                                    <td th:text="${classroom.name}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Fee</td>
+                                    <td th:text="${classroom.fee}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Session</td>
+                                    <td>
+                                        <a th:href="${'/dashboard/manage/session/' + sessionObj.id}" th:text="${sessionObj.startYear}">
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Course Structures</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Stream</th>
+                                    <th>Has Course Structure</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="stream : ${streams}">
+                                    <td th:text="${stream.name}"></td>
+                                    <td th:if="${stream.courseStructure}">Yes</td>
+                                    <td th:unless="${stream.courseStructure}">No</td>
+                                    <td th:if="${stream.courseStructure}">
+                                        <a th:href="${'/dashboard/manage/session/' + sessionObj.id + '/classroom/' + classroom.id + '/structure/' + stream.courseStructure.id}" class="btn-sm btn-primary">
+                                            <span class="text">View Course Structure</span>
+                                        </a>
+                                    </td>
+                                    <td th:unless="${stream.courseStructure}">
+                                        <a th:href="${'/dashboard/manage/session/' + sessionObj.id + '/classroom/' + classroom.id + '/add/structure/' + stream.id}" class="btn-sm btn-success">
+                                            <span class="text">Create Course Structure</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <footer th:replace="dashboard/layouts/footer :: footer"></footer>
+    </div>
+</div>
+
+<a th:replace="dashboard/layouts/scrollToTop :: scrollToTop"> </a>
+<div th:replace="dashboard/layouts/logoutModal :: logoutModal"></div>
+<script th:replace="site/layouts/toast :: toast"></script>
+</body>
+
+</html>

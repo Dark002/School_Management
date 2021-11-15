@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="dashboard/layouts/header :: header"></head>
+
+<body id="page-top">
+<div id="wrapper">
+    <ul th:replace="dashboard/layouts/sidebar :: sidebar"></ul>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <nav th:replace="dashboard/layouts/navbar :: navbar"></nav>
+
+            <div class="container-fluid">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <a class="btn-sm btn-primary" th:href="${'/dashboard/manage/student/'+ student.rollNo}">Back to Student Info</a>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Info</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <tbody>
+                                <tr>
+                                    <td>Student</td>
+                                    <td>
+                                        <a th:href="${'/dashboard/manage/student/' + student.rollNo}" th:text="${student.rollNo + ' - ' + student.Name}"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Session</td>
+                                    <td>
+                                        <a th:href="${'/dashboard/manage/session/' + student.session.id}" th:text="${student.session.startYear}"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Classroom</td>
+                                    <td>
+                                        <a th:href="${'/dashboard/manage/session/' + student.session.id + '/classroom/' + classroom.id}" th:text="${classroom.name}"></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Subjects Registered</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="subjectTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Grade</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="subjectRegistration: ${classroomRegistration.subjectRegistrations}">
+                                    <td>
+                                        <a th:href="${'/dashboard/manage/subject/' + subjectRegistration.subject.id}" th:text="${subjectRegistration.subject.code + ' - ' + subjectRegistration.subject.name}"></a>
+                                    </td>
+                                    <td th:if="${subjectRegistration.result}" th:text="${subjectRegistration.result.grade}"></td>
+                                    <td th:unless="${subjectRegistration.result}">Not graded</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <script>
+                                $(document).ready(function () {
+                                    $('#subjectTable').DataTable();
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Fee transactions</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Transaction Id</th>
+                                    <th>Amount</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="feeTransaction: ${feeTransactions}">
+                                    <td th:text="${#dates.format(feeTransaction.date, 'dd-MM-yyyy')}"></td>
+                                    <td th:text="${feeTransaction.transactionId}"></td>
+                                    <td th:text="${feeTransaction.amount}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <footer th:replace="dashboard/layouts/footer :: footer"></footer>
+    </div>
+</div>
+
+<a th:replace="dashboard/layouts/scrollToTop :: scrollToTop"> </a>
+<div th:replace="dashboard/layouts/logoutModal :: logoutModal"></div>
+<script th:replace="site/layouts/toast :: toast"></script>
+</body>
+
+</html>

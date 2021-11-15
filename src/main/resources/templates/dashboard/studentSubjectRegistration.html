@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="dashboard/layouts/header :: header"></head>
+
+<body id="page-top">
+<div id="wrapper">
+    <ul th:replace="dashboard/layouts/sidebar :: sidebar"></ul>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <nav th:replace="dashboard/layouts/navbar :: navbar"></nav>
+
+            <div class="container-fluid">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800" th:text="${subjectRegistration.subject.code + ' - ' + subjectRegistration.subject.name}"></h1>
+                </div>
+
+                <div class="card shadow mb-4" th:if="${teacher}">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Teacher Info</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <tbody>
+                                <tr>
+                                    <td>Name</td>
+                                    <td th:text="${teacher.name}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td th:text="${teacher.email}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone No</td>
+                                    <td th:text="${teacher.phoneNo}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td th:text="${teacher.address}"></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Date of Birth</td>
+                                    <td th:text="${#dates.format(teacher.dob, 'dd-MM-yyyy')}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Subject Info</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <tbody>
+                                <tr>
+                                    <td>Code</td>
+                                    <td th:text="${subjectRegistration.subject.code}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td th:text="${subjectRegistration.subject.name}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Grade</td>
+                                    <td th:if="${subjectRegistration.result}" th:text="${subjectRegistration.result.grade}"></td>
+                                    <td th:unless="${subjectRegistration.result}">Not graded</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <footer th:replace="dashboard/layouts/footer :: footer"></footer>
+    </div>
+</div>
+
+<a th:replace="dashboard/layouts/scrollToTop :: scrollToTop"> </a>
+<div th:replace="dashboard/layouts/logoutModal :: logoutModal"></div>
+<script th:replace="site/layouts/toast :: toast"></script>
+</body>
+
+</html>

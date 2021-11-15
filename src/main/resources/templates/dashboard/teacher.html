@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="dashboard/layouts/header :: header"></head>
+
+<body id="page-top">
+<div id="wrapper">
+    <ul th:replace="dashboard/layouts/sidebar :: sidebar"></ul>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <nav th:replace="dashboard/layouts/navbar :: navbar"></nav>
+
+            <div class="container-fluid">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <a class="btn-sm btn-primary" href='/dashboard/manage/teacher'>Back to Teachers</a>
+                    <a th:href="${deleteUrl}" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm">Delete Teacher</a>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Info</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <tbody>
+                                <tr>
+                                    <td>Name</td>
+                                    <td th:text="${teacher.name}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td th:text="${teacher.email}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone</td>
+                                    <td th:text="${teacher.phoneNo}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td th:text="${teacher.address}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Date of Birth</td>
+                                    <td th:text="${#dates.format(teacher.dob, 'dd-MM-yyyy')}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Assigned Subjects</td>
+                                    <td th:if="${teacher.assignedSubjects.size() == 0}">None</td>
+                                    <td th:unless="${teacher.assignedSubjects.size() == 0}">
+                                        <div th:each="subject: ${teacher.assignedSubjects}">
+                                            <a th:href="${'/dashboard/manage/subject/' + subject.id}" th:text="${subject.name}"></a>
+                                            <br>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Payouts</h6>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Actions:</div>
+                                <a class="dropdown-item" th:href="${'/dashboard/manage/teacher/' + teacher.id + '/add/payout'}">Add Payout</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Transaction Id</th>
+                                    <th>Amount</th>
+                                    <th>Remarks</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="payout: ${payouts}">
+                                    <td th:text="${#dates.format(payout.date, 'dd-MM-yyyy')}"></td>
+                                    <td th:text="${payout.transactionId}"></td>
+                                    <td th:text="${payout.amount}"></td>
+                                    <td th:text="${payout.remarks}"></td>
+                                    <td>
+                                        <a th:href="${'/dashboard/manage/teacher/' + teacher.id + '/payout/' + payout.id + '/delete'}" class="btn-sm btn-danger">
+                                            <span class="text">Delete</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="dashboard/layouts/footer :: footer"></footer>
+    </div>
+</div>
+
+<a th:replace="dashboard/layouts/scrollToTop :: scrollToTop"> </a>
+<div th:replace="dashboard/layouts/logoutModal :: logoutModal"></div>
+<script th:replace="site/layouts/toast :: toast"></script>
+</body>
+
+</html>
